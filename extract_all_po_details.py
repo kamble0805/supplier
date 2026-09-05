@@ -275,6 +275,11 @@ def main():
             # Strip terms and conditions boilerplate
             text = re.split(r"TERMS\s+(?:AND|&)\s+CONDITIONS", text, flags=re.I)[0]
             header_data = extract_header(text, pdf_path.name)
+            po_num = str(header_data.get("PO Number", "")).strip()
+            if po_num.lower().startswith("pulj"):
+                print(f"[{idx}/{len(pdf_files)}] Skipping {pdf_path.name}: PO Number '{po_num}' starts with PULJ")
+                continue
+
             totals = extract_totals(text)
             items = extract_items(text)
 

@@ -50,6 +50,16 @@ def main():
         print(f"Error reading {MASTER_CSV.name}: {e}")
         return
 
+    # Exclude POs with PO Number starting with 'PULJ' (case-insensitive)
+    po_cols = [c for c in df_ext.columns if any(k in str(c).strip().lower() for k in ["po number", "po no", "p.o.no", "p.o. no", "po_number", "po_no", "ponumber", "pono"]) or str(c).strip().lower() == "po"]
+    if po_cols:
+        po_col = po_cols[0]
+        initial_len = len(df_ext)
+        df_ext = df_ext[~df_ext[po_col].astype(str).str.strip().str.lower().str.startswith("pulj")].copy()
+        excluded_count = initial_len - len(df_ext)
+        if excluded_count > 0:
+            print(f"Excluded {excluded_count} record(s) with PO number starting with 'PULJ'.")
+
     # Extract supplier name lists
     ext_names = df_ext["CustName"].dropna().unique().tolist()
     master_names = df_master["CustName"].dropna().unique().tolist()
