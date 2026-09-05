@@ -1,0 +1,19 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Execution logs
+*.log
+item/*.log
+
+# Generated output Excel files
+template_PDF_Extracted*.xlsx
+supplier_comparison_report*.xlsx
+all_po_details*.xlsx
+ItemMaster_Reconciled*.xlsx
+item/ItemMaster_Reconciled*.xlsx
+
+# Excel temporary and lock files
+~$*.xlsx
+~$*.xls
